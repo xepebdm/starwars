@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../../bootstrap/css/bootstrap.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Formulário do Planeta</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" th:href="@{/}">StarWars</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse ml-auto"
+			id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/"
+					th:href="@{/}">INICIO <span class="sr-only"></span>
+				</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="/list"
+					th:href="@{/adicionar}">ADD PLANETA</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="/list"
+					th:href="@{/addAll}">Add PLANETAS DO SITE</a></li>
+
+				<li class="nav-item"><a class="nav-link btn btn-danger"
+					tabindex="-1" th:href="@{/removeAll}" type="submit">DELETAR
+						TODOS</a></li>
+			</ul>
+			<input style="width: 200px;"
+				class="form-control col-md-6 offset-md-1" id="pesquisar" type="text"
+				placeholder="Pesquisar...">
+		</div>
+	</nav>
+
+	<form class="form-group col-md-6 offset-md-3" method="post"
+		th:action="@{/salvar}">
+
+		<div class="form-group">
+			<label for="exampleFormControlInput1">NOME</label> <input
+				th:field="${planeta.id}" type="hidden" /> <input
+				th:field="${planeta.idString}" type="hidden" />
+				<input
+				th:field="${planeta.url}" type="hidden" /> <input
+				th:field="${planeta.qtdFilmes}" type="hidden" /> <input
+				th:field="${planeta.name}" type="text" class="form-control"
+				id="name" th:placeholder="${planeta.name}" /> <a
+				th:if="${#fields.hasErrors('planeta.name')}"
+				th:errors="*{planeta.name}">Erro no nome</a>
+		</div>
+		<div class="form-group">
+			<label for="exampleFormControlInput1">CLIMA</label> <input
+				th:field="*{planeta.climate}" type="text" class="form-control"
+				id="climate" th:placeholder="${planeta.climate}" /> <a
+				th:if="${#fields.hasErrors('planeta.climate')}"
+				th:errors="*{planeta.climate}">Erro no clima</a>
+		</div>
+		<div class="form-group">
+			<label for="exampleFormControlInput1">TERRENO</label> <input
+				th:field="*{planeta.terrain}" type="text" class="form-control"
+				id="terrain" th:placeholder="${planeta.terrain}" /> <a
+				th:if="${#fields.hasErrors('planeta.terrain')}"
+				th:errors="*{planeta.terrain}">Erro no terreno</a>
+		</div>
+		<button type="submit" class="btn btn-success">SALVAR</button>
+		<a th:href="@{/}">
+			<button type="button" class="btn btn-secondary">CANCELAR</button>
+		</a>
+	</form>
+	<script>
+$(document).ready(function(){
+  $("#pesquisar").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabela tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+</body>
+</html>

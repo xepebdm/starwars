@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../../bootstrap/css/bootstrap.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<title>Inicio</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" th:href="@{/}">StarWars</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse ml-auto"
+			id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/"
+					th:href="@{/}">INICIO <span class="sr-only"></span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="/list"
+					th:href="@{/adicionar}">ADD PLANETA</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="/list"
+					th:href="@{/addAll}">ADD PLANETAS DO SITE</a></li>
+
+				<li class="nav-item"><a class="nav-link btn btn-danger"
+					tabindex="-1" th:href="@{/removeAll}" type="submit">DELETAR
+						TODOS</a></li>
+			</ul>
+			<input style="width: 200px;"
+				class="form-control col-md-6 offset-md-1" id="pesquisar" type="text"
+				placeholder="Pesquisar...">
+		</div>
+	</nav>
+	<br>
+
+	<table style="width: 1100px;"
+		class="table table-sm col-md-6 offset-md-1">
+		<thead class="thead-dark bg-dark">
+			<tr>
+				<th scope="col" hidden="true">ID</th>
+				<th scope="col">Nome</th>
+				<th scope="col">Clima</th>
+				<th scope="col">Terreno</th>
+				<th scope="col">Qtd Filmes</th>
+				<th scope="col">Editar</th>
+				<th scope="col">Deletar</th>
+			</tr>
+		</thead>
+		<tbody id="tabela">
+
+			<tr th:each="planeta : ${planetas}">
+			<td th:text="${planeta.idString}" hidden="true"></td>
+				<td th:text="${planeta.id}" hidden="true"></td>
+				<td th:text="${planeta.url}" hidden="true"></td>
+				<td th:text="${planeta.name}"></td>
+				<td th:text="${planeta.climate}"></td>
+				<td th:text="${planeta.terrain}"></td>
+				<td th:text="${planeta.qtdFilmes}"></td>
+				<td><a class="btn btn-success"
+					th:href="@{/editar(id=${planeta.idString})}" type="button">EDITAR</a></td>
+				<td><a class="btn btn-danger"
+					th:href="@{/deletar(id=${planeta.idString})}" type="button">DELETAR</a></td>
+			</tr>
+
+		</tbody>
+	</table>
+
+	<script>
+$(document).ready(function(){
+  $("#pesquisar").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabela tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+</body>
+</html>

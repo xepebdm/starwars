@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../../bootstrap/css/bootstrap.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Formulário do Planeta</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" th:href="@{/}">StarWars</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse ml-auto"
+			id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/"
+					th:href="@{/}">INICIO <span class="sr-only"></span>
+				</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="/list"
+					th:href="@{/adicionar}">ADD PLANETA</a></li>
+
+				<li class="nav-item"><a class="nav-link" href="/list"
+					th:href="@{/addAll}">Add PLANETAS DO SITE</a></li>
+
+				<li class="nav-item"><a class="nav-link btn btn-danger"
+					tabindex="-1" th:href="@{/removeAll}" type="submit">DELETAR
+						TODOS</a></li>
+			</ul>
+		</div>
+	</nav>
+	<br>
+	<h1>Ops... Algo deu errado!</h1>
+
+</body>
+</html>
