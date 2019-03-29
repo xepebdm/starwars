@@ -2,8 +2,7 @@ package br.com.apistarwars.starwars.model;
 
 import java.util.ArrayList;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -35,16 +34,13 @@ public class Planeta {
 
 	private int qtdFilmes;
 	
-	@NotNull(message="O nome é obrigatório")
-	@Size(min=4, max=30)
+	@NotBlank
 	private String name;
 	
-	@NotNull(message="O clima é obrigatório")
-	@Size(min=3, max=30)
+	@NotBlank
 	private String climate;
 	
-	@NotNull(message="O terreno é obrigatório")
-	@Size(min=4, max=50)
+	@NotBlank
 	private String terrain;
 	
 	private ArrayList<String> films = new ArrayList<>();

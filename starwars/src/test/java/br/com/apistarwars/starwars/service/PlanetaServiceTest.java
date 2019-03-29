@@ -2,73 +2,39 @@ package br.com.apistarwars.starwars.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.apistarwars.starwars.StarwarsApplication;
 import br.com.apistarwars.starwars.model.Planeta;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = {StarwarsApplication.class})
 public class PlanetaServiceTest {
 
 	@Autowired
 	private PlanetaService service;
 	
 	@Test
-	public void testSalvaUmPlaneta() {
+	public void testSalvaUmPlaneta() throws Exception {
 		Planeta planeta = new Planeta();
-		planeta.setName("Terra");
-		planeta.setTerrain("calcario, arenoso");
+		planeta.setName("Yavin IV");
+		planeta.setTerrain("jungle, rainforests");
+		planeta.setClimate("temperate, tropical");
 		
 		service.save(planeta);
 		
-		Planeta terra = service.findByName("terra");
+		Planeta terra = service.findByName("Yavin IV");
 		
 		assertEquals(terra.getName(), planeta.getName());
 	}
 	
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testRemoveUmPorNome() throws Exception{
-		Planeta planeta = service.obterUmViaSwapi(12);
-		
-		String nome = "Utapau";
-		
-		service.removerPorNome(nome);
-		service.findByName(planeta.getName());
-	}
-	
-	@Test
-	public void testSalvaTodosViaApi() throws Exception{
-		List<Planeta> planetas = service.obterTodosViaSwapi();
-		
-		service.saveAll(planetas);
-		
-		List<Planeta> planetas2 = service.obterTodosViaBanco();
-		
-		assertEquals(planetas.size(), planetas2.size());
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testRemoveTodosPorTerreno() throws Exception{
-		
-		service.obterTodosViaSwapi();
-		service.removeAllPorTerreno("savanna");
-		
-		service.findByTerrain("savanna");
-	}
-	
 	@Test
 	public void testObterTodosPeloNome() throws Exception {
-		Planeta terra = service.obterUmViaSwapi(13);
+		Planeta terra = service.getPlanetSWApiById(13);
 		
 		service.save(terra);
 		
@@ -82,50 +48,58 @@ public class PlanetaServiceTest {
 	@Test
 	public void testObterPorId() throws Exception{
 		Planeta planeta = new Planeta();
-		planeta.setName("Planeta teste por Id");
-		planeta.setClimate("hot");
-		planeta.setTerrain("gasoso");
+		planeta.setName("Endor");
+		planeta.setClimate("temperate");
+		planeta.setTerrain("forests, mountains, lakes");
 		
 		service.save(planeta);
 		
-		Planeta planetaId = service.findById(planeta.getIdString());
+		Planeta planetaId = service.findById(7);
 		
-		assertEquals("Planeta teste por Id", planetaId.getName());
+		assertEquals("Endor", planetaId.getName());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testRemovePorId() throws Exception{
 		Planeta planeta = new Planeta();
-		planeta.setName("Planeta teste por Id");
-		planeta.setClimate("hot");
-		planeta.setTerrain("gasoso");
+		planeta.setName("Shili");
+		planeta.setClimate("temperate");
+		planeta.setTerrain("cities, savannahs, seas, plains");
 		
 		service.save(planeta);
 		
-		service.removePorId(planeta.getIdString());
+		service.removePorId(58);
 		
-		service.findById(planeta.getIdString());
+		service.findById(58);
 		
 		
 	}
 	
 	@Test
 	public void testeUpdate() throws Exception{
-		Planeta planeta = service.findByName("Eriadu");
 		
-		planeta.setName("Novo nome");
+		Planeta planeta = new Planeta();
+		planeta.setName("Shili");
+		planeta.setClimate("temperate");
+		planeta.setTerrain("cities, savannahs, seas, plains");
 		
-		service.update(planeta);
+		service.save(planeta);
 		
-		Planeta novo = service.findById("5c6a016e8e0cd81348cf0a32");
+		Planeta planeta2 = service.findByName("Shili");
+		
+		planeta2.setName("Novo nome");
+		
+		service.update(planeta2);
+		
+		Planeta novo = service.findById(58);
 		
 		assertEquals("Novo nome", novo.getName());
 	}
 	
-//	@After
-//	public void rollback() {
-//		service.removeAll();
-//	}
+	@After
+	public void rollback() {
+		service.removeAll();
+	}
 	
 	
 
