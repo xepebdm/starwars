@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.gson.Gson;
 
 
 
@@ -128,10 +127,6 @@ public class Planeta {
 		
 		this.id = Integer.valueOf(idString);
 				
-	}
-
-	public static Planeta toJson(String planetaJson) {
-		return new Gson().fromJson(planetaJson, Planeta.class);
 	}
 	
 }

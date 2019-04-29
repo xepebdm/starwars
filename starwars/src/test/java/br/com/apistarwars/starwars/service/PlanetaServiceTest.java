@@ -34,15 +34,15 @@ public class PlanetaServiceTest {
 	
 	@Test
 	public void testObterTodosPeloNome() throws Exception {
-		Planeta terra = service.getPlanetSWApiById(13);
+		Planeta planet = service.getPlanetSWApiById(13);
 		
-		service.save(terra);
+		service.save(planet);
 		
 		String nomeNovo = "Mustafar";
 		
 		Planeta mustafar = service.findByName(nomeNovo);
 		
-		assertEquals(terra.getClimate(), mustafar.getClimate());
+		assertEquals(planet.getClimate(), mustafar.getClimate());
 	}
 	
 	@Test
